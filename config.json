@@ -1,0 +1,17 @@
+{
+  "graphql": {
+    "hostname": "localhost",
+    "port": 8000
+  },
+  "datasources": {
+    "bungeeAdminTools": {
+      "db": {
+        "host": "localhost",
+        "port": 3306,
+        "database": "bat",
+        "user": "user",
+        "password": "123456"
+      }
+    }
+  }
+}
