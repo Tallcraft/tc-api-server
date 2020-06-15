@@ -10,18 +10,11 @@ class MCServer {
   }
 
   static async getStatus(serverId) {
-    let status;
-    try {
-      status = await mcServerConnector.fetchServerStatusCached(serverId);
-    } catch (error) {
-      return {
-        isOnline: false,
-      };
-    }
+    const status = await mcServerConnector.fetchServerStatusCached(serverId);
     return {
-      isOnline: true,
-      onlinePlayerCount: status.players.online,
-      maxPlayerCount: status.players.max,
+      isOnline: status.isOnline,
+      onlinePlayerCount: status.players?.online,
+      maxPlayerCount: status.players?.max,
       queryTime: status.queryTime?.toString(10),
     };
   }
