@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       field: 'UUID',
     },
-    name: {
+    lastSeenName: {
       type: DataTypes.STRING,
       field: 'BAT_player',
       allowNull: false,
