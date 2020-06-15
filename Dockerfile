@@ -19,7 +19,7 @@ COPY --chown=node:node config.default.json ./config.json
 
 EXPOSE 4000
 
-ENV NODE_END production
+ENV NODE_ENV production
 ENV IP_ADDRESS 0.0.0.0
 ENV PORT 4000
 CMD [ "node", "src/index.js" ]
