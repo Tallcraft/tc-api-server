@@ -11,6 +11,7 @@ const mcServerType = gql`
         isOnline: Boolean
         onlinePlayerCount: Int
         maxPlayerCount: Int,
+        queryTime: String,
     }
 `;
 

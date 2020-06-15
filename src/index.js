@@ -8,6 +8,6 @@ const config = require('../config.json');
 (async () => {
   const server = new ApolloServer({ typeDefs, resolvers });
 
-  const { url } = await server.listen(config.graphql);
+  const { url } = await server.listen(config.apollo);
   console.info('Started server at', url);
 })();

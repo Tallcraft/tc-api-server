@@ -12,7 +12,7 @@ class MCServer {
   static async getStatus(serverId) {
     let status;
     try {
-      status = await mcServerConnector.fetchServerStatus(serverId);
+      status = await mcServerConnector.fetchServerStatusCached(serverId);
     } catch (error) {
       return {
         isOnline: false,
@@ -22,6 +22,7 @@ class MCServer {
       isOnline: true,
       onlinePlayerCount: status.players.online,
       maxPlayerCount: status.players.max,
+      queryTime: status.queryTime?.toString(10),
     };
   }
 }
