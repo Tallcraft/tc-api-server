@@ -6,7 +6,7 @@ class Player {
   }
 
   static getByUUID(uuid) {
-    return bungeeAdminToolsConnector.models.player.findByPk(uuid);
+    return bungeeAdminToolsConnector.models.player.findByPk(uuid.replace('-', ''));
   }
 }
 
