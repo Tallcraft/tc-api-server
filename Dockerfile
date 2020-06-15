@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
@@ -14,11 +14,12 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 # Bundle app source
-COPY --chown=node:node src .
+COPY --chown=node:node src ./src
+COPY --chown=node:node config.default.json ./config.json
 
-EXPOSE 8080
+EXPOSE 4000
 
 ENV NODE_END production
-ENV HOST 0.0.0.0
-ENV PORT 8080
-CMD [ "node", "index.js" ]
+ENV IP_ADDRESS 0.0.0.0
+ENV PORT 4000
+CMD [ "node", "src/index.js" ]

@@ -1,6 +1,6 @@
 {
   "apollo": {
-    "hostname": "localhost",
+    "ip": "localhost",
     "port": 4000
   },
   "connectors": {
