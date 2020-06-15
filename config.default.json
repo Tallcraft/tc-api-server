@@ -1,9 +1,9 @@
 {
-  "graphql": {
+  "apollo": {
     "hostname": "localhost",
-    "port": 8000
+    "port": 4000
   },
-  "datasources": {
+  "connectors": {
     "bungeeAdminTools": {
       "db": {
         "host": "localhost",
@@ -12,6 +12,17 @@
         "user": "user",
         "password": "123456"
       }
+    },
+    "mcServerStatus": {
+      "servers": [
+        {
+          "id": "dev",
+          "name": "Local Test Server",
+          "host": "localhost",
+          "port": 25565,
+          "version": "1.15.2"
+        }
+      ]
     }
   }
 }
