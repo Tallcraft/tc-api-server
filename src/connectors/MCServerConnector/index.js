@@ -1,13 +1,15 @@
 const mc = require('minecraft-protocol');
+const config = require('../../../config.json');
 
-module.exports = class MCServerStatus {
-  constructor({ servers }) {
-    this.servers = new Map(Object.entries(servers));
-  }
+const servers = new Map(Object.entries(config.connectors.mcServerStatus.servers));
 
+const mcServerConnector = {
+  get servers() {
+    return servers;
+  },
   getStatus(serverId) {
     return new Promise((resolve, reject) => {
-      const server = this.servers.get(serverId);
+      const server = servers.get(serverId);
       if (!server) {
         return reject(new Error(`Server '${serverId}' is not configured.`));
       }
@@ -22,5 +24,7 @@ module.exports = class MCServerStatus {
         return resolve(data);
       });
     });
-  }
+  },
 };
+
+module.exports = { mcServerConnector };

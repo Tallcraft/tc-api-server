@@ -1,25 +1,16 @@
 const { ApolloServer } = require('apollo-server');
 
-const BungeeAdminTools = require('./dataSources/BungeeAdminTools');
-const MCServerStatus = require('./dataSources/MCServerStatus');
-const config = require('../config.json');
+const { resolvers } = require('./resolvers');
+const { typeDefs } = require('./typeDefs');
 
-const schema = require('./api/schema');
+//const config = require('../config.json');
+
+// TODO: connectors: https://www.graphql-tools.com/docs/connectors/
+// TODO: directory structure according to https://github.com/betaflag/graphql-server-scaffolding/tree/master/role-oriented
 
 (async () => {
-  const bungeeAdminTools = new BungeeAdminTools(config.datasources.bungeeAdminTools);
-  const mcServerStatus = new MCServerStatus(config.datasources.mcServerStatus);
-
-  const dataSources = { bungeeAdminTools, mcServerStatus };
-  const server = new ApolloServer({ schema: schema(dataSources) });
+  const server = new ApolloServer({ typeDefs, resolvers });
 
   const { url } = await server.listen();
-  console.info('Started server', url);
-
-  // const bat = new BungeeAdminTools(config.datasources.bungeeAdminTools.db);
-  //   //
-  //   // const player = await bat.models.player.findByPk('', {
-  //   //   include: [bat.models.ban],
-  //   // });
-  //   // console.debug(JSON.stringify(player.dataValues, null, 2));
+  console.info('Started server at', url);
 })();
