@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
-const config = require('../../../config.json');
+const config = require('../../config');
 
 const {
   host, database, user, password,
-} = config.connectors.bungeeAdminTools.db;
+} = config.get('connectors.bungeeAdminTools.db');
 
 const db = new Sequelize(database, user, password, {
   host,

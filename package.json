@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "dependencies": {
     "apollo-server": "^2.14.4",
+    "convict": "^6.0.0",
+    "convict-format-with-validator": "^6.0.0",
     "graphql": "^15.1.0",
     "minecraft-protocol": "^1.12.1",
     "mysql2": "^2.1.0",

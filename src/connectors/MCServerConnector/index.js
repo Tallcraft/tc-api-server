@@ -1,5 +1,5 @@
 const mc = require('minecraft-protocol');
-const config = require('../../../config.json');
+const config = require('../../config');
 
 // How many miliseconds to cache Minecraft query data
 const CACHE_QUERY_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
@@ -7,7 +7,7 @@ const QUERY_TIMEOUT_MS = 5000;
 
 // Map of server metadata
 const servers = new Map();
-config.connectors.mcServerStatus.servers.forEach((server) => {
+config.get('connectors.mcServerStatus.servers').forEach((server) => {
   servers.set(server.id, server);
 });
 
