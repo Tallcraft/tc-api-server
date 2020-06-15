@@ -10,11 +10,12 @@ const mcServerConnector = {
   get servers() {
     return servers;
   },
-  getStatus(serverId) {
+  fetchServerStatus(serverId) {
     return new Promise((resolve, reject) => {
       const server = servers.get(serverId);
       if (!server) {
-        return reject(new Error(`Server '${serverId}' is not configured.`));
+        // We don't have information about this server
+        return null;
       }
       mc.ping({
         host: server.host,

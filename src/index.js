@@ -13,4 +13,7 @@ const { typeDefs } = require('./typeDefs');
 
   const { url } = await server.listen();
   console.info('Started server at', url);
+
+  //const {mcServerConnector} = require('./connectors');
+  //console.debug(JSON.stringify(await mcServerConnector.fetchServerStatus("network"), null, 2));
 })();

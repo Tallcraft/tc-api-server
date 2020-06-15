@@ -8,6 +8,22 @@ class MCServer {
   static getById(id) {
     return mcServerConnector.servers.get(id);
   }
+
+  static async getStatus(serverId) {
+    let status;
+    try {
+      status = await mcServerConnector.fetchServerStatus(serverId);
+    } catch (error) {
+      return {
+        isOnline: false,
+      };
+    }
+    return {
+      isOnline: true,
+      onlinePlayerCount: status.players.online,
+      maxPlayerCount: status.players.max,
+    };
+  }
 }
 
 module.exports = { MCServer };
