@@ -1,6 +1,7 @@
 const player = require('./player');
+const MCServer = require('./MCServer');
 
-const resolverConstructors = { player };
+const resolverConstructors = { player, MCServer };
 
 module.exports = (dataSources) => {
   const resolvers = {};

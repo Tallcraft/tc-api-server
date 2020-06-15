@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
 
 module.exports = class BungeeAdminTools {
-  constructor({ host, database, user, password } = {}) {
+  constructor({ db } = {}) {
+    const {
+      host, database, user, password,
+    } = db;
     this.sequelize = new Sequelize(database, user, password, {
       host,
       dialect: 'mysql',
