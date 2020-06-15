@@ -1,7 +1,10 @@
 const mc = require('minecraft-protocol');
 const config = require('../../../config.json');
 
-const servers = new Map(Object.entries(config.connectors.mcServerStatus.servers));
+const servers = new Map();
+config.connectors.mcServerStatus.servers.forEach((server) => {
+  servers.set(server.id, server);
+});
 
 const mcServerConnector = {
   get servers() {
