@@ -6,6 +6,10 @@ const { typeDefs } = require('./typeDefs');
 const config = require('./config');
 
 (async () => {
+  process.on('SIGINT', function() {
+    process.exit();
+  });
+
   const server = new ApolloServer({ typeDefs, resolvers });
 
   const { url } = await server.listen(config.get('apollo'));
