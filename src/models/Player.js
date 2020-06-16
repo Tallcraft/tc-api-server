@@ -1,8 +1,12 @@
 const { bungeeAdminToolsConnector } = require('../connectors');
 
 class Player {
-  static all(limit, offset) {
-    return null; //TODO
+  static getPlayerList({ limit, offset, order}) {
+    return bungeeAdminToolsConnector.models.player.findAll({
+      offset,
+      limit,
+      order: [['firstLogin', order]],
+    });
   }
 
   static getByUUID(uuid) {

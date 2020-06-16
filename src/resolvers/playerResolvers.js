@@ -1,9 +1,15 @@
 const { Player } = require('../models');
 
+const MAX_PLAYER_QUERY_COUNT = 100;
+
 const playerResolvers = {
   Query: {
-    // TODO: set max value for limit / offset argument
-    players: (_, { offset = 0, limit = 10 }) => Player.all(offset, limit),
+    players: ((_, { limit, offset, order }) => {
+      if(limit > MAX_PLAYER_QUERY_COUNT) {
+        limit = MAX_PLAYER_QUERY_COUNT;
+      }
+      return Player.getPlayerList({ limit, offset, order })
+    }),
     player: (_, { uuid }) => Player.getByUUID(uuid),
   },
 };
