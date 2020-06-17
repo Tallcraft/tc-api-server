@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       field: 'UUID',
     },
-    banIP: {
+    bannedIP: {
       type: DataTypes.STRING,
       field: 'ban_ip',
       allowNull: false,
@@ -27,29 +27,29 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       field: 'ban_staff',
     },
-    banReason: {
+    reason: {
       type: DataTypes.STRING,
       field: 'ban_reason',
     },
-    banServer: {
+    server: {
       type: DataTypes.STRING,
       field: 'ban_server',
     },
-    banBegin: {
+    createdAt: {
       type: DataTypes.DATE,
       field: 'ban_begin',
       validate: {
         isDate: true,
       },
     },
-    banEnd: {
+    expiresAt: {
       type: DataTypes.DATE,
       field: 'ban_end',
       validate: {
         isDate: true,
       },
     },
-    banState: {
+    isActive: {
       type: DataTypes.TINYINT,
       field: 'ban_state',
       allowNull: false,

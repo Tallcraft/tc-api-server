@@ -12,6 +12,12 @@ const playerResolvers = {
     }),
     player: (_, { uuid }) => Player.getByUUID(uuid),
   },
+  Player: {
+    infractions: (player, _, context) => {
+      context.playerUUID = player.uuid;
+      return {};
+    }
+  }
 };
 
 module.exports = {
