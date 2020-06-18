@@ -3,9 +3,7 @@ const { MCServer } = require('../models');
 const mcServersResolvers = {
   Query: {
     mcServers: () => MCServer.all(),
-    mcServer: (parent, { serverId }, context) => {
-      return MCServer.getById(serverId);
-    },
+    mcServer: (parent, { serverId }, context) => MCServer.getById(serverId),
   },
   MCServer: {
     status(parent) {
