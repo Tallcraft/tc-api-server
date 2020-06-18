@@ -10,7 +10,9 @@ const config = require('./config');
     process.exit();
   });
 
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({
+    typeDefs, resolvers, introspection: true, playground: true,
+  });
 
   const { url } = await server.listen(config.get('apollo'));
   console.info('Started server at', url);
