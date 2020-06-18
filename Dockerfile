@@ -15,7 +15,7 @@ RUN npm ci --only=production
 
 # Bundle app source
 COPY --chown=node:node src ./src
-COPY --chown=node:node config.default.json ./config.json
+COPY --chown=node:node config.json ./config.json
 
 EXPOSE 4000
 
