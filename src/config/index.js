@@ -8,7 +8,7 @@ const config = convict({
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
     default: 'development',
-    env: 'NODE_ENV'
+    env: 'NODE_ENV',
   },
   apollo: {
     ip: {
@@ -22,7 +22,7 @@ const config = convict({
       format: 'port',
       default: 4000,
       env: 'PORT',
-      arg: 'port'
+      arg: 'port',
     },
   },
   connectors: {
@@ -57,15 +57,15 @@ const config = convict({
           default: undefined,
           sensitive: true,
           env: 'BAT_DB_PASSWORD',
-        }
-      }
+        },
+      },
     },
     mcServerStatus: {
       servers: {
         doc: 'A collection of mc server info.',
         format: Array,
         default: [],
-        children:  {
+        children: {
           id: {
             doc: 'Unique identifier.',
             format: String,
@@ -84,22 +84,22 @@ const config = convict({
           port: {
             doc: 'Port of the mc server.',
             format: 'port',
-            default: 25565
+            default: 25565,
           },
           version: {
             doc: 'Minecraft server version',
             format: String,
             default: undefined,
-          }
+          },
         },
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
 config.loadFile('./config.json');
 
 // Perform validation
-config.validate({allowed: 'strict'});
+config.validate({ allowed: 'strict' });
 
 module.exports = config;

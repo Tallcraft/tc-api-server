@@ -17,5 +17,5 @@ const playerInfractionsType = gql`
 `;
 
 module.exports = {
-    playerInfractionsType,
+  playerInfractionsType,
 };

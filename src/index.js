@@ -6,7 +6,7 @@ const { typeDefs } = require('./typeDefs');
 const config = require('./config');
 
 (async () => {
-  process.on('SIGINT', function() {
+  process.on('SIGINT', () => {
     process.exit();
   });
 

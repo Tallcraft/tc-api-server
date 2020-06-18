@@ -49,7 +49,7 @@ const mcServerConnector = {
   },
   fetchServerStatus(serverId) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         reject(new Error(`Timed out while querying server '${serverId}`));
       }, QUERY_TIMEOUT_MS);
       const server = servers.get(serverId);
@@ -65,11 +65,13 @@ const mcServerConnector = {
         if (error) {
           return reject(error);
         }
+        clearTimeout(timeout);
         return resolve({
           isOnline: true,
           ...data,
         });
       });
+      return undefined;
     });
   },
 };
