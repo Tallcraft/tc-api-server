@@ -4,11 +4,16 @@ const MAX_PLAYER_QUERY_COUNT = 100;
 
 const playerResolvers = {
   Query: {
-    players: ((_, { limit, offset, order }) => {
-      if(limit > MAX_PLAYER_QUERY_COUNT) {
-        limit = MAX_PLAYER_QUERY_COUNT;
+    players: ((_, {
+      limit, offset, order, searchPlayerName,
+    }) => {
+      let queryLimit = limit;
+      if (queryLimit > MAX_PLAYER_QUERY_COUNT) {
+        queryLimit = MAX_PLAYER_QUERY_COUNT;
       }
-      return Player.getPlayerList({ limit, offset, order })
+      return Player.getPlayerList({
+        limit: queryLimit, offset, order, searchPlayerName,
+      });
     }),
     player: (_, { uuid }) => Player.getByUUID(uuid),
   },
@@ -16,8 +21,8 @@ const playerResolvers = {
     infractions: (player, _, context) => {
       context.playerUUID = player.uuid;
       return {};
-    }
-  }
+    },
+  },
 };
 
 module.exports = {

@@ -8,7 +8,7 @@ const query = gql`
     type Query {
         mcServers: [MCServer]
         mcServer(serverId: String): MCServer
-        players(limit: Int = 10, offset: Int = 0, order: ListOrder = DESC ): [Player]!
+        players(limit: Int = 10, offset: Int = 0, order: ListOrder = DESC, searchPlayerName: String ): [Player]!
         player(uuid: ID): Player
     }
 `;
