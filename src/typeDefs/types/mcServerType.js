@@ -8,7 +8,8 @@ const mcServerType = gql`
         status: MCServerStatus
     }
     type MCServerStatus {
-        isOnline: Boolean
+        serverId: String!,
+        isOnline: Boolean!
         onlinePlayerCount: Int
         maxPlayerCount: Int,
         onlinePlayers: [Player],
