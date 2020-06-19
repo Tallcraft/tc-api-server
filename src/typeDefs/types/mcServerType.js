@@ -8,6 +8,8 @@ const mcServerType = gql`
         name: String!
         "Minecraft server version."
         version: String!
+        "Public client connection address."
+        publicAddress: String
         "Server status information."
         status: MCServerStatus
     }
