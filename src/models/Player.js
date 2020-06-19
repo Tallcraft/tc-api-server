@@ -16,7 +16,7 @@ class Player {
       options.where = {
         lastSeenName: Sequelize.where(
           Sequelize.fn('LOWER',
-            Sequelize.col('BAT_player')), 'LIKE', `%${searchPlayerName}%`,
+            Sequelize.col('BAT_player')), 'LIKE', searchPlayerName,
         ),
       };
     }
