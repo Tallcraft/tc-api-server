@@ -16,6 +16,7 @@ class MCServer {
       onlinePlayerCount: status.players?.online,
       maxPlayerCount: status.players?.max,
       queryTime: status.queryTime?.toString(10),
+      onlinePlayers: status.players?.sample,
     };
   }
 }

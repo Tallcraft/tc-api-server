@@ -24,7 +24,19 @@ class Player {
   }
 
   static getByUUID(uuid) {
-    return bungeeAdminToolsConnector.models.player.findByPk(uuid.replace('-', ''));
+    const cleanUUID = Player.cleanupUUID(uuid);
+    if (!cleanUUID) {
+      return null;
+    }
+    return bungeeAdminToolsConnector.models.player.findByPk(cleanUUID);
+  }
+
+  static cleanupUUID(uuid) {
+    // Filter undefined and 0 uuids
+    if (uuid == null || Number.parseInt(uuid, 10) === 0) {
+      return null;
+    }
+    return uuid.replace(/[^a-zA-Z0-9]/g, '');
   }
 }
 
