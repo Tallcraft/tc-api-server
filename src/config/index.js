@@ -24,6 +24,11 @@ const config = convict({
       env: 'PORT',
       arg: 'port',
     },
+    maxQueryCost: {
+      doc: 'Limit complexity of queries to prevent abuse. Set to -1 to disable limit.',
+      format: 'int',
+      default: 2000,
+    },
   },
   connectors: {
     bungeeAdminTools: {

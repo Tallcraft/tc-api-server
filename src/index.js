@@ -1,4 +1,5 @@
 const { ApolloServer } = require('apollo-server');
+const { createComplexityLimitRule } = require('graphql-validation-complexity');
 
 const { resolvers } = require('./resolvers');
 const { typeDefs } = require('./typeDefs');
@@ -10,8 +11,13 @@ const config = require('./config');
     process.exit();
   });
 
+  const maxQueryCost = config.get('apollo.maxQueryCost');
   const server = new ApolloServer({
-    typeDefs, resolvers, introspection: true, playground: true,
+    typeDefs,
+    resolvers,
+    validationRules: maxQueryCost > 0 ? [createComplexityLimitRule(maxQueryCost)] : [],
+    introspection: true,
+    playground: true,
   });
 
   const { url } = await server.listen(config.get('apollo'));
