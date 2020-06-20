@@ -11,6 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: package docker
         run: |
+          cat src/typeDefs/types/playerType.js
           docker login docker.pkg.github.com --username Tallcraft --password ${{ secrets.GITHUB_TOKEN }}
           docker build . --file Dockerfile --tag docker.pkg.github.com/tallcraft/tc-api-server/app:master
           docker push docker.pkg.github.com/tallcraft/tc-api-server/app:master
