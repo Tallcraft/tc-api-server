@@ -102,7 +102,7 @@ const config = convict({
   },
 });
 
-config.loadFile('./config.json');
+config.loadFile(process.env.CONFIG_PATH || './config.json');
 
 // Perform validation
 config.validate({ allowed: 'strict' });
