@@ -10,6 +10,52 @@ class MCServer {
     return mcServerConnector.servers.get(id);
   }
 
+  /**
+   * Get server object by UUID of an online player.
+   * Async iterates over all server status trying to find the server the player is connected to.
+   * @param uuid {String} - Player UUID.
+   * @returns {Promise<{Object}|{null}>} - The first server found to which the player is
+   * currently connected to, or null if no matching server found.
+   */
+  static async getByOnlinePlayer(uuid) {
+    const cleanUUID = Player.cleanupUUID(uuid);
+    if (!cleanUUID) {
+      return null;
+    }
+
+    // Create a map which maps server ids to search promises.
+    // Promises will return server boolean if player is found along with server object.
+    const searches = new Map();
+    mcServerConnector.servers.forEach((server) => {
+      const promise = new Promise((resolve) => {
+        mcServerConnector.fetchServerStatusCached(server.id).then((queryStatus) => {
+          const players = queryStatus?.players?.sample;
+          const playerFound = players
+            && players.some((player) => Player.cleanupUUID(player.id) === cleanUUID);
+          if (playerFound) {
+            resolve({ found: true, server });
+          } else {
+            resolve({ found: false, server });
+          }
+        });
+      });
+      searches.set(server.id, promise);
+    });
+
+    while (searches.size) {
+      // It's ok to await in loop here because we have to wait for the next promise to resolve.
+      // eslint-disable-next-line no-await-in-loop
+      const { found, server } = await Promise.race(searches.values());
+      if (found) {
+        return server;
+      }
+      searches.delete(server.id);
+    }
+
+    // Player not in any of the online servers or status query failed.
+    return null;
+  }
+
   static async getOnlinePlayers(serverId) {
     const queryStatus = await mcServerConnector.fetchServerStatusCached(serverId);
     if (!queryStatus?.players?.sample) {

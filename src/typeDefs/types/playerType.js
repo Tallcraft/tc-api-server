@@ -12,6 +12,9 @@ const playerType = gql`
         lastLogin: String
         "Unix timestamp of first player login on any server of the network."
         firstLogin: String
+        "Minecraft server the player is currently connected to. Null if player is not connected to any server or we don't have information about the server."
+        connectedTo: MCServer
+        "Player infractions, such as bans."
         infractions: PlayerInfractions
     }
 `;

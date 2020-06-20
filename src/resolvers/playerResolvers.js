@@ -1,4 +1,4 @@
-const { Player } = require('../models');
+const { Player, MCServer } = require('../models');
 
 const MAX_PLAYER_QUERY_COUNT = 100;
 
@@ -18,6 +18,7 @@ const playerResolvers = {
     player: (_, { uuid }) => Player.getByUUID(uuid),
   },
   Player: {
+    connectedTo: ((player) => MCServer.getByOnlinePlayer(player.uuid)),
     infractions: (player, _, context) => {
       context.playerUUID = player.uuid;
       return {};
