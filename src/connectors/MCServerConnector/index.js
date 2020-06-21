@@ -15,6 +15,11 @@ config.get('connectors.mcServerStatus.servers').forEach((server) => {
 const serverStatus = new Map();
 
 const mcServerConnector = {
+
+  get serversArray() {
+    return Array.from(servers.values());
+  },
+
   get servers() {
     return servers;
   },

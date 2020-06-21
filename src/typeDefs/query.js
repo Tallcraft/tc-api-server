@@ -6,7 +6,10 @@ const query = gql`
       ASC,
   }
     type Query {
-        mcServers: [MCServer]
+        mcServers(
+            "Filter servers by online state. Set to null to disable filter."
+            isOnline: Boolean = null,
+        ): [MCServer]
         mcServer(
             "The unique identifier of the server."
             serverId: String

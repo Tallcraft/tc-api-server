@@ -2,8 +2,31 @@ const { mcServerConnector } = require('../connectors');
 const { Player } = require('./Player');
 
 class MCServer {
-  static all() {
-    return Array.from(mcServerConnector.servers.values());
+  /**
+   * Get list of configured Minecraft servers with optional filtering.
+   * @param {Boolean|null} [isOnline] - Filter by online state.
+   * @returns {Promise<{Object}[]>} - Array of servers.
+   */
+  static async getServerList({ isOnline } = {}) {
+    // No filter
+    if (isOnline == null) {
+      return mcServerConnector.serversArray;
+    }
+
+    // Filter by online state
+    const tasks = mcServerConnector.serversArray.map(async (server) => {
+      const status = await mcServerConnector.fetchServerStatusCached(server.id);
+      if (status?.isOnline === isOnline) {
+        return server;
+      }
+      return null;
+    });
+
+    // Collect query results
+    const servers = await Promise.all(tasks);
+
+    // Filter out null servers which didn't match filter above.
+    return servers.filter((server) => !!server);
   }
 
   static getById(id) {
