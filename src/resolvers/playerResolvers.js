@@ -23,6 +23,10 @@ const playerResolvers = {
       context.playerUUID = player.uuid;
       return {};
     },
+    groups: ((player) => Player.getGroups(player.uuid)),
+  },
+  PlayerGroup: {
+    server: ((group) => MCServer.getById(group.serverId)),
   },
 };
 

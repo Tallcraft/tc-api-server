@@ -16,6 +16,8 @@ const playerType = gql`
         connectedTo: MCServer
         "Player infractions, such as bans."
         infractions: PlayerInfractions
+        "List of groups (ranks) this player belongs to."
+        groups: [PlayerGroup]
     }
 `;
 

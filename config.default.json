@@ -12,7 +12,15 @@
         "database": "bat",
         "user": "user",
         "password": "123456"
-      }
+      },
+      "luckPerms": {
+        "db": {
+          "host": "localhost",
+          "port": 3306,
+          "database": "lp",
+          "user": "user",
+          "password": "123456"
+        }
     },
     "mcServerStatus": {
       "servers": [

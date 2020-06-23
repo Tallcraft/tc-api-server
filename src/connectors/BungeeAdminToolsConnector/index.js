@@ -25,7 +25,6 @@ Object.values(models).forEach((model) => model.associate(models));
 const bungeeAdminToolsConnector = {
   models,
   db,
-  Sequelize,
   testConnection() {
     return db.authenticate();
   },
