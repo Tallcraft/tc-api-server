@@ -30,6 +30,13 @@ class MCServer {
   }
 
   static getById(id) {
+    // This is a fix for BAT using brackets for the global server identifier which is incompatible
+    // with other data sources. A proper fix would be supporting server aliases in the
+    // MCServerConnector.
+    if (id === '(global)') {
+      // eslint-disable-next-line no-param-reassign
+      id = 'global';
+    }
     return mcServerConnector.servers.get(id);
   }
 
