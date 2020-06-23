@@ -35,4 +35,5 @@ module.exports = (sequelize, DataTypes) => sequelize.define('luckperms_user_perm
   },
 }, {
   tableName: 'luckperms_user_permissions',
+  timestamps: false,
 });

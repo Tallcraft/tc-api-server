@@ -10,16 +10,13 @@ const db = new Sequelize(database, user, password, {
   dialect: 'mysql',
 });
 
-// TODO: Initialize models
-const models = {};
-
-// Establish associations between models
-Object.values(models).forEach((model) => model.associate(models));
+const models = {
+  playerPermissions: db.import(`${__dirname}/models/luckperms_user_permissions`),
+};
 
 const luckPermsConnector = {
   models,
   db,
-  Sequelize,
   testConnection() {
     return db.authenticate();
   },
