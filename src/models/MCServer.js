@@ -1,5 +1,6 @@
 const { mcServerConnector } = require('../connectors');
 const { Player } = require('./Player');
+const { isNullUUID } = require('./util');
 
 class MCServer {
   /**
@@ -48,8 +49,7 @@ class MCServer {
    * currently connected to, or null if no matching server found.
    */
   static async getByOnlinePlayer(uuid) {
-    const cleanUUID = Player.cleanupUUID(uuid);
-    if (!cleanUUID) {
+    if (!uuid) {
       return null;
     }
 
@@ -61,7 +61,7 @@ class MCServer {
         mcServerConnector.fetchServerStatusCached(server.id).then((queryStatus) => {
           const players = queryStatus?.players?.sample;
           const playerFound = players
-            && players.some((player) => Player.cleanupUUID(player.id) === cleanUUID);
+            && players.some((player) => player.id === uuid);
           if (playerFound) {
             resolve({ found: true, server });
           } else {
@@ -100,11 +100,10 @@ class MCServer {
           // If the player is not found in the database, ensure we always set their uuid and name
           // as queried by the MCServerConnector.
           if (!player.uuid) {
-            const uuid = Player.cleanupUUID(queryPlayer.id);
-            if (!uuid) {
+            if (isNullUUID(queryPlayer.id)) {
               return null;
             }
-            player.uuid = uuid;
+            player.uuid = queryPlayer.id;
           }
           // Name is only set by data from the MCServerConnector,
           // because this is guaranteed to be recent.

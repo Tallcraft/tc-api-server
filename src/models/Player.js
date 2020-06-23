@@ -24,9 +24,11 @@ class Player {
       };
     }
     const result = await bungeeAdminToolsConnector.models.player.findAll(options);
+
+    // Fix invalid UUIDS without dashes
     return result.map((player) => ({
+      ...player.dataValues,
       uuid: fixUpUUID(player.uuid),
-      ...player,
     }));
   }
 
@@ -46,11 +48,13 @@ class Player {
     })).filter((group) => group.id !== 'default');
   }
 
-  static getByUUID(uuid) {
+  static async getByUUID(uuid) {
     if (isNullUUID(uuid)) {
       return null;
     }
-    return bungeeAdminToolsConnector.models.player.findByPk(stripUUID(uuid));
+    const player = await bungeeAdminToolsConnector.models.player.findByPk(stripUUID(uuid));
+    player.dataValues.uuid = fixUpUUID(player.dataValues.uuid);
+    return player.dataValues;
   }
 }
 
