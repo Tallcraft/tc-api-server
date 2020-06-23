@@ -37,10 +37,11 @@ class Player {
     });
     // Group memberships are stored as permissions, e.g. Admins have the permission group.admin
     // Convert permission query results to group objects
+    // Filter out default group. It does not provide meaningful info.
     return result.map((entry) => ({
       id: entry.permission.split('.')[1],
       serverId: entry.server,
-    }));
+    })).filter((group) => group.id !== 'default');
   }
 
   static getByUUID(uuid) {
