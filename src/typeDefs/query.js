@@ -26,7 +26,7 @@ const query = gql`
         ): [Player]!
         player(
             "The unique identifier of the player as defined by Minecraft."
-            uuid: ID
+            uuid: ID!
         ): Player
     }
 `;
