@@ -43,6 +43,7 @@ const config = convict({
           doc: 'The database port.',
           format: 'port',
           default: '3306',
+          env: 'LP_DB_PORT',
         },
         database: {
           doc: 'The database name.',
@@ -62,6 +63,41 @@ const config = convict({
           default: undefined,
           sensitive: true,
           env: 'BAT_DB_PASSWORD',
+        },
+      },
+    },
+    luckPerms: {
+      db: {
+        host: {
+          doc: 'The database host.',
+          format: String,
+          default: 'localhost',
+          env: 'LP_DB_HOST',
+        },
+        port: {
+          doc: 'The database port.',
+          format: 'port',
+          default: '3306',
+          env: 'LP_DB_PORT',
+        },
+        database: {
+          doc: 'The database name.',
+          format: String,
+          default: undefined,
+          env: 'LP_DB_NAME',
+        },
+        user: {
+          doc: 'The database user.',
+          format: String,
+          default: undefined,
+          env: 'LP_DB_USER',
+        },
+        password: {
+          doc: 'The database user password.',
+          format: String,
+          default: undefined,
+          sensitive: true,
+          env: 'LP_DB_PASSWORD',
         },
       },
     },
