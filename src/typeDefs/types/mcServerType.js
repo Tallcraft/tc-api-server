@@ -12,20 +12,22 @@ const mcServerType = gql`
         publicAddress: String
         "Server status information."
         status: MCServerStatus
+        "How often the status information is fetched from the server in seconds."
+        statusPollInterval: Int
     }
     type MCServerStatus {
         "Unique identifier of the server."
-        serverId: String!,
+        serverId: String!
         "Whether the server is online."
         isOnline: Boolean!
         "How many player are currently on the server."
         onlinePlayerCount: Int
         "Maximum player capacity."
-        maxPlayerCount: Int,
+        maxPlayerCount: Int
         "Information on the players currently on the server."
-        onlinePlayers: [Player],
+        onlinePlayers: [Player]
         "When the status information was last refreshed."
-        queryTime: String,
+        queryTime: String
     }
 `;
 

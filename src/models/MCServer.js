@@ -16,7 +16,7 @@ class MCServer {
 
     // Filter by online state
     const tasks = mcServerConnector.serversArray.map(async (server) => {
-      const status = await mcServerConnector.fetchServerStatusCached(server.id);
+      const status = await mcServerConnector.getServerStatus(server.id);
       if (status?.isOnline === isOnline) {
         return server;
       }
@@ -58,7 +58,7 @@ class MCServer {
     const searches = new Map();
     mcServerConnector.servers.forEach((server) => {
       const promise = new Promise((resolve) => {
-        mcServerConnector.fetchServerStatusCached(server.id).then((queryStatus) => {
+        mcServerConnector.getServerStatus(server.id).then((queryStatus) => {
           const players = queryStatus?.players?.sample;
           const playerFound = players
             && players.some((player) => player.id === uuid);
@@ -87,7 +87,7 @@ class MCServer {
   }
 
   static async getOnlinePlayers(serverId) {
-    const queryStatus = await mcServerConnector.fetchServerStatusCached(serverId);
+    const queryStatus = await mcServerConnector.getServerStatus(serverId);
     if (!queryStatus?.players?.sample) {
       return null;
     }
@@ -116,7 +116,10 @@ class MCServer {
   }
 
   static async getStatus(serverId) {
-    const status = await mcServerConnector.fetchServerStatusCached(serverId);
+    const status = await mcServerConnector.getServerStatus(serverId);
+    if (!status) {
+      return null;
+    }
     return {
       serverId,
       isOnline: status.isOnline,
