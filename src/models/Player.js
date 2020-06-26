@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const { bungeeAdminToolsConnector, luckPermsConnector } = require('../connectors');
 
-const {isNullUUID, fixUpUUID, stripUUID } = require('./util');
+const { isNullUUID, fixUpUUID, stripUUID } = require('./util');
 
 const { Op } = Sequelize;
 
