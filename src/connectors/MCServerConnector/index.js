@@ -10,7 +10,10 @@ const defaultPollInterval = config.get('connectors.mcServerStatus.defaultPollInt
 // Maps server id to server metadata
 const servers = new Map();
 config.get('connectors.mcServerStatus.servers').forEach((server) => {
-  servers.set(server.id, server);
+  servers.set(server.id, {
+    statusPollInterval: server.pollInterval || defaultPollInterval,
+    ...server,
+  });
 });
 
 // Maps server id to server status
