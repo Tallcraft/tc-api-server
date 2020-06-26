@@ -1,17 +1,19 @@
 const mc = require('minecraft-protocol');
 const config = require('../../config');
 
-// How many miliseconds to cache Minecraft query data
-const SERVER_QUERY_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+// How long to wait for Minecraft query server reply before marking the server as offline.
 const QUERY_TIMEOUT_MS = 5000;
 
-// Map of server metadata
+// How often we query servers if there is no per-server poll interval set.
+const defaultPollInterval = config.get('connectors.mcServerStatus.defaultPollInterval');
+
+// Maps server id to server metadata
 const servers = new Map();
 config.get('connectors.mcServerStatus.servers').forEach((server) => {
   servers.set(server.id, server);
 });
 
-// Stores server status info
+// Maps server id to server status
 const serverStatus = new Map();
 
 // Maps server ids to promises indicating whether a server query has been completed.
@@ -74,16 +76,13 @@ async function fetchAndStoreServerStatus(server) {
   lastQuery.set(server.id, lastQueryPromise);
 }
 
-async function pollServerStatus() {
-  servers.forEach((server) => {
-    fetchAndStoreServerStatus(server);
-  });
-}
-
-// Setup interval to query servers on a predefined interval.
-setInterval(pollServerStatus, SERVER_QUERY_INTERVAL_MS);
-// setInterval only starts after interval, make initial call
-pollServerStatus();
+// Setup server polling
+servers.forEach((server) => {
+  const pollInterval = server.pollInterval || defaultPollInterval;
+  setInterval(() => fetchAndStoreServerStatus(server), pollInterval * 1000);
+  // Initial query call
+  fetchAndStoreServerStatus(server);
+});
 
 const mcServerConnector = {
   get serversArray() {
