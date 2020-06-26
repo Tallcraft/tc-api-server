@@ -2,8 +2,19 @@ const convict = require('convict');
 
 convict.addFormat(require('convict-format-with-validator').ipaddress);
 
-// Define a schema
-const config = convict({
+convict.addFormat({
+  name: 'mc-server-array',
+  validate(servers, schema) {
+    if (!Array.isArray(servers)) {
+      throw new Error('must be of type Array');
+    }
+    servers.forEach((server) => {
+      convict(schema.children).load(server).validate({ allowed: 'strict' });
+    });
+  },
+});
+
+const schema = {
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
@@ -102,9 +113,14 @@ const config = convict({
       },
     },
     mcServerStatus: {
+      defaultPollInterval: {
+        doc: 'Default value for how often to query servers in seconds.',
+        type: Number,
+        default: 300,
+      },
       servers: {
         doc: 'A collection of mc server info.',
-        format: Array,
+        format: 'mc-server-array',
         default: [],
         children: {
           id: {
@@ -132,11 +148,24 @@ const config = convict({
             format: String,
             default: undefined,
           },
+          publicAddress: {
+            doc: 'Publicly reachable server address. To be used in Minecraft clients.',
+            format: String,
+            default: undefined,
+          },
+          pollInterval: {
+            doc: 'How often to poll server status in seconds',
+            format: Number,
+            default: 300,
+          },
         },
       },
     },
   },
-});
+};
+
+// Define a schema
+const config = convict(schema);
 
 config.loadFile(process.env.CONFIG_PATH || './config.json');
 
