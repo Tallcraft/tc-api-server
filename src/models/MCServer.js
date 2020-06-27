@@ -88,28 +88,36 @@ class MCServer {
 
   static async getOnlinePlayers(serverId) {
     const queryStatus = await mcServerConnector.getServerStatus(serverId);
-    if (!queryStatus?.players?.sample) {
+
+    // FIXME: For online servers with no players sample is null
+    // How do we differentiate between no players and server does not provide player list?
+    const playerSample = queryStatus?.players?.sample;
+    if (!playerSample) {
+      return null;
+    }
+
+    // Server is online but does not export online players.
+    if (playerSample.length === 1 && playerSample[0].id === '00000000-0000-0000-0000-000000000000') {
       return null;
     }
 
     const result = await Promise.all(
-      queryStatus.players.sample
-        .map(async (queryPlayer) => {
-          // Get player from database
-          const player = await Player.getByUUID(queryPlayer.id) || {};
-          // If the player is not found in the database, ensure we always set their uuid and name
-          // as queried by the MCServerConnector.
-          if (!player.uuid) {
-            if (isNullUUID(queryPlayer.id)) {
-              return null;
-            }
-            player.uuid = queryPlayer.id;
+      playerSample.map(async (queryPlayer) => {
+        // Get player from database
+        const player = await Player.getByUUID(queryPlayer.id) || {};
+        // If the player is not found in the database, ensure we always set their uuid and name
+        // as queried by the MCServerConnector.
+        if (!player.uuid) {
+          if (isNullUUID(queryPlayer.id)) {
+            return null;
           }
-          // Name is only set by data from the MCServerConnector,
-          // because this is guaranteed to be recent.
-          player.name = queryPlayer.name;
-          return player;
-        }),
+          player.uuid = queryPlayer.id;
+        }
+        // Name is only set by data from the MCServerConnector,
+        // because this is guaranteed to be recent.
+        player.name = queryPlayer.name;
+        return player;
+      }),
     );
     // Remove any null objects
     return result.filter((player) => !!player);

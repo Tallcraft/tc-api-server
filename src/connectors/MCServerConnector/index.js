@@ -23,21 +23,16 @@ const serverStatus = new Map();
 const lastQuery = new Map();
 
 function fetchServerStatus(server) {
-  return new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      reject(new Error(`Timed out while querying server '${server.id}`));
-    }, QUERY_TIMEOUT_MS);
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => resolve({ isOnline: false }), QUERY_TIMEOUT_MS);
     mc.ping({
       host: server.host,
       port: server.port,
       version: server.version,
     }, (error, data) => {
-      if (error) {
-        return reject(error);
-      }
       clearTimeout(timeout);
       return resolve({
-        isOnline: true,
+        isOnline: !error,
         ...data,
       });
     });
@@ -51,31 +46,19 @@ async function fetchAndStoreServerStatus(server) {
     await lastQuery.get(server.id);
   }
   const requestTime = new Date().getTime();
+  let status;
 
   // Wrap query promise again to mask promise rejection.
-  const lastQueryPromise = new Promise((resolve) => {
-    let status;
-    fetchServerStatus(server)
-      .then((queryResult) => {
-        // Server query successful, store data and timestamp
-        status = {
-          queryTime: requestTime,
-          ...queryResult,
-        };
-      })
-      .catch(() => {
-        // Server query failed, mark it as offline
-        status = {
-          isOnline: false,
-          queryTime: requestTime,
-        };
-      })
-      .finally(() => {
-        // Store server status object in map.
-        serverStatus.set(server.id, status);
-        resolve();
-      });
-  });
+  const lastQueryPromise = fetchServerStatus(server)
+    .then((queryResult) => {
+      // Server query successful, store data and timestamp
+      status = {
+        queryTime: requestTime,
+        ...queryResult,
+      };
+      // Store server status object in map.
+      serverStatus.set(server.id, status);
+    });
   lastQuery.set(server.id, lastQueryPromise);
 }
 
