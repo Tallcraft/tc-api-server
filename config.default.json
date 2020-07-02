@@ -1,6 +1,6 @@
 {
   "apollo": {
-    "ip": "localhost",
+    "host": "localhost",
     "port": 4000,
     "maxQueryCost": 4000
   },

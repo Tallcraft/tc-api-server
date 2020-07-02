@@ -22,11 +22,11 @@ const schema = {
     env: 'NODE_ENV',
   },
   apollo: {
-    ip: {
-      doc: 'The IP address to bind.',
-      format: 'ipaddress',
-      default: '127.0.0.1',
-      env: 'IP_ADDRESS',
+    host: {
+      doc: 'The host address to bind.',
+      format: String,
+      default: 'localhost',
+      env: 'HOST',
     },
     port: {
       doc: 'The port to bind.',
