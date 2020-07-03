@@ -19,6 +19,6 @@ COPY --chown=node:node src ./src
 EXPOSE 4000
 
 ENV NODE_ENV production
-ENV IP_ADDRESS 0.0.0.0
+ENV HOST 0.0.0.0
 ENV PORT 4000
 CMD [ "node", "src/index.js" ]
