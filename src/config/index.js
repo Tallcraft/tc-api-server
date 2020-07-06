@@ -1,4 +1,5 @@
 const convict = require('convict');
+const fs = require('fs');
 
 convict.addFormat(require('convict-format-with-validator').ipaddress);
 
@@ -38,6 +39,7 @@ const schema = {
     maxQueryCost: {
       doc: 'Limit complexity of queries to prevent abuse. Set to -1 to disable limit.',
       format: 'int',
+      env: 'MAX_QUERY_COST',
       default: 2000,
     },
   },
@@ -54,7 +56,7 @@ const schema = {
           doc: 'The database port.',
           format: 'port',
           default: '3306',
-          env: 'LP_DB_PORT',
+          env: 'BAT_DB_PORT',
         },
         database: {
           doc: 'The database name.',
@@ -116,6 +118,7 @@ const schema = {
       defaultPollInterval: {
         doc: 'Default value for how often to query servers in seconds.',
         type: Number,
+        env: 'MCSTATUS_DEFAULT_POLL_INTERVAL',
         default: 300,
       },
       servers: {
@@ -167,7 +170,22 @@ const schema = {
 // Define a schema
 const config = convict(schema);
 
-config.loadFile(process.env.CONFIG_PATH || './config.json');
+try {
+  config.loadFile(process.env.CONFIG_PATH || './config.json');
+} catch (error) {
+  console.warn(error);
+  console.info('Could not read config file, fallback to ENV and mounted secrets.');
+}
+
+// Check for mounted secrets which overwrite config vars (docker)
+if (process.env.BAT_DB_PASSWORD_FILE) {
+  config.set('connectors.bungeeAdminTools.db.password',
+    fs.readFileSync(process.env.BAT_DB_PASSWORD_FILE, 'utf8').trim());
+}
+if (process.env.LP_DB_PASSWORD_FILE) {
+  config.set('connectors.bungeeAdminTools.db.password',
+    fs.readFileSync(process.env.LP_DB_PASSWORD_FILE, 'utf8').trim());
+}
 
 // Perform validation
 config.validate({ allowed: 'strict' });
