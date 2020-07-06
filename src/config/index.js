@@ -183,7 +183,7 @@ if (process.env.BAT_DB_PASSWORD_FILE) {
     fs.readFileSync(process.env.BAT_DB_PASSWORD_FILE, 'utf8').trim());
 }
 if (process.env.LP_DB_PASSWORD_FILE) {
-  config.set('connectors.bungeeAdminTools.db.password',
+  config.set('connectors.luckPerms.db.password',
     fs.readFileSync(process.env.LP_DB_PASSWORD_FILE, 'utf8').trim());
 }
 
