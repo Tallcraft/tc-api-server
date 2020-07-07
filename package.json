@@ -9,7 +9,7 @@
     "convict-format-with-validator": "^6.0.0",
     "graphql": "^15.1.0",
     "graphql-validation-complexity": "^0.3.0",
-    "minecraft-protocol": "^1.12.1",
+    "minecraft-protocol": "^1.13.0",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.12"
   },
