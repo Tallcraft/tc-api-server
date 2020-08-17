@@ -2,7 +2,7 @@
   "apollo": {
     "host": "localhost",
     "port": 4000,
-    "maxQueryCost": 4000
+    "maxQueryCost": 7000
   },
   "connectors": {
     "bungeeAdminTools": {
