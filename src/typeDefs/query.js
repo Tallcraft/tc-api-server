@@ -23,7 +23,7 @@ const query = gql`
             order: ListOrder = DESC,
             "Filter results by last seen player name. Supports SQL LIKE patterns."
             searchPlayerName: String
-        ): [Player]!
+        ): PlayerSearchResult!
         player(
             "The unique identifier of the player as defined by Minecraft. Must be a valid UUIDv4 with dashes."
             uuid: ID!

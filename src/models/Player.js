@@ -23,13 +23,22 @@ class Player {
         ),
       };
     }
-    const result = await bungeeAdminToolsConnector.models.player.findAll(options);
+    const playerQuery = bungeeAdminToolsConnector.models.player.findAll(options)
+      // Fix invalid UUIDS without dashes
+      .then((result) => result.map((player) => ({
+        ...player.dataValues,
+        uuid: fixUpUUID(player.uuid),
+      })));
 
-    // Fix invalid UUIDS without dashes
-    return result.map((player) => ({
-      ...player.dataValues,
-      uuid: fixUpUUID(player.uuid),
-    }));
+    // Get count of players matching the query.
+    // Don't use offset or limit to get the total result count.
+    const countQuery = bungeeAdminToolsConnector.models.player.count({
+      where: options.where,
+    });
+
+    // Collect query results and return
+    const [result, totalCount] = await Promise.all([playerQuery, countQuery]);
+    return { result, totalCount };
   }
 
   static async getGroups(uuid) {
