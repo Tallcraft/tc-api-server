@@ -19,7 +19,7 @@ const mcServerType = gql`
         "Unique identifier of the server."
         serverId: String!
         "Whether the server is online."
-        isOnline: Boolean!
+        isOnline: Boolean
         "How many player are currently on the server."
         onlinePlayerCount: Int
         "Maximum player capacity."

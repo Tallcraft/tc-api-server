@@ -25,17 +25,22 @@ const lastQuery = new Map();
 function fetchServerStatus(server) {
   return new Promise((resolve) => {
     const timeout = setTimeout(() => resolve({ isOnline: false }), QUERY_TIMEOUT_MS);
-    mc.ping({
-      host: server.host,
-      port: server.port,
-      version: server.version,
-    }, (error, data) => {
-      clearTimeout(timeout);
-      return resolve({
-        isOnline: !error,
-        ...data,
+    try {
+      mc.ping({
+        host: server.host,
+        port: server.port,
+        version: server.version,
+      }, (error, data) => {
+        clearTimeout(timeout);
+        return resolve({
+          isOnline: !error,
+          ...data,
+        });
       });
-    });
+    } catch (error) {
+      console.error('Error while pining server', error);
+      return resolve();
+    }
     return undefined;
   });
 }
