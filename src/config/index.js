@@ -136,23 +136,30 @@ const schema = {
             format: String,
             default: undefined,
           },
-          host: {
-            doc: 'Hostname of the mc server.',
-            format: String,
-            default: 'localhost',
+          statusMonitor: {
+            host: {
+              doc: 'Hostname of the mc server.',
+              format: String,
+              default: 'localhost',
+            },
+            port: {
+              doc: 'Port of the mc server.',
+              format: 'port',
+              default: 25565,
+            },
+            version: {
+              doc: 'Minecraft server version used for monitoring.',
+              format: String,
+              default: undefined,
+            },
           },
-          port: {
-            doc: 'Port of the mc server.',
-            format: 'port',
-            default: 25565,
-          },
-          version: {
-            doc: 'Minecraft server version',
+          address: {
+            doc: 'Publicly reachable server address. Exposed to API consumers.',
             format: String,
             default: undefined,
           },
-          publicAddress: {
-            doc: 'Publicly reachable server address. To be used in Minecraft clients.',
+          version: {
+            doc: 'Minecraft server version exposed to API consumers.',
             format: String,
             default: undefined,
           },

@@ -29,9 +29,13 @@
         {
           "id": "dev",
           "name": "Local Test Server",
-          "host": "localhost",
-          "port": 25565,
-          "version": "1.15.2",
+          "statusMonitor": {
+            "host": "localhost",
+            "port": 25565,
+            "version": "1.16.1"
+          },
+          "address": "localhost:25565",
+          "version": "1.16.3",
           "pollingInterval": 60
         }
       ]

@@ -6,10 +6,10 @@ const mcServerType = gql`
         id: ID!
         "Human readable name."
         name: String!
+        "Minecraft server connection address."
+        address: String
         "Minecraft server version."
-        version: String!
-        "Public client connection address."
-        publicAddress: String
+        version: String
         "Server status information."
         status: MCServerStatus
         "How often the status information is fetched from the server in seconds."

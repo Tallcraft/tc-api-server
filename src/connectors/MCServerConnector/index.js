@@ -26,11 +26,7 @@ function fetchServerStatus(server) {
   return new Promise((resolve) => {
     const timeout = setTimeout(() => resolve({ isOnline: false }), QUERY_TIMEOUT_MS);
     try {
-      mc.ping({
-        host: server.host,
-        port: server.port,
-        version: server.version,
-      }, (error, data) => {
+      mc.ping(server.statusMonitor, (error, data) => {
         clearTimeout(timeout);
         return resolve({
           isOnline: !error,
