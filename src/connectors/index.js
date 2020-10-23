@@ -1,4 +1,4 @@
-const { mcServerConnector } = require('./MCServerConnector');
+const mcServerConnector = require('./MCServerConnector');
 const { bungeeAdminToolsConnector } = require('./BungeeAdminToolsConnector');
 const { luckPermsConnector } = require('./LuckPermsConnector');
 

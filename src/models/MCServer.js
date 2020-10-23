@@ -1,6 +1,18 @@
+// eslint-disable-next-line max-classes-per-file
+const EventEmitter = require('events');
 const { mcServerConnector } = require('../connectors');
 const { Player } = require('./Player');
 const { isNullUUID } = require('./util');
+
+class MCServerStatus extends EventEmitter {
+  constructor() {
+    super();
+    mcServerConnector.on('serverStatusUpdated',
+      (id, onlineStatusUpdated) => this.emit('serverStatusUpdated', id, onlineStatusUpdated));
+  }
+}
+
+const serverStatusEmitter = new MCServerStatus();
 
 class MCServer {
   /**
@@ -135,6 +147,10 @@ class MCServer {
       maxPlayerCount: status.players?.max,
       queryTime: status.queryTime?.toString(10),
     };
+  }
+
+  static get serverStatusEmitter() {
+    return serverStatusEmitter;
   }
 }
 

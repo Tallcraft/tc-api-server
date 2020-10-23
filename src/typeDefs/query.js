@@ -1,10 +1,10 @@
 const { gql } = require('apollo-server');
 
 const query = gql`
-  enum ListOrder {
-      DESC,
-      ASC,
-  }
+    enum ListOrder {
+        DESC,
+        ASC,
+    }
     type Query {
         mcServers(
             "Filter servers by online state. Set to null to disable filter."
@@ -28,6 +28,12 @@ const query = gql`
             "The unique identifier of the player as defined by Minecraft. Must be a valid UUIDv4 with dashes."
             uuid: ID!
         ): Player
+    }
+    type Subscription {
+        "Updates whenever the status of a server changes. This includes online state and player count."
+        serverStatusUpdated: MCServer!
+        "Updated when the online status of a server changes."
+        serverOnlineStatusUpdated: MCServer!
     }
 `;
 
