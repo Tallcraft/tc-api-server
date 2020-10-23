@@ -24,7 +24,7 @@
       }
     },
     "mcServerStatus": {
-      "defaultPollingInterval": 300,
+      "defaultPollInterval": 300,
       "servers": [
         {
           "id": "dev",
