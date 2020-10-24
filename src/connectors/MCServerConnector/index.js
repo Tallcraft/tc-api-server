@@ -101,10 +101,11 @@ class MCServerConnector extends EventEmitter {
   // TODO: Also emit if online players changes
   _emitOnStatusChange(serverId, statusOld, statusNew) {
     const onlineStatusUpdated = statusNew?.isOnline !== statusOld?.isOnline;
-    if (statusOld
-      && !onlineStatusUpdated
+
+    if (!statusOld
+      || (!onlineStatusUpdated
       && statusNew.players?.max === statusOld.players?.max
-      && statusNew.players?.online === statusOld.players?.online) {
+      && statusNew.players?.online === statusOld.players?.online)) {
       return;
     }
 
