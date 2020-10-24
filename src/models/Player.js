@@ -62,6 +62,9 @@ class Player {
       return null;
     }
     const player = await bungeeAdminToolsConnector.models.player.findByPk(stripUUID(uuid));
+    if (!player) {
+      return null;
+    }
     player.dataValues.uuid = fixUpUUID(player.dataValues.uuid);
     return player.dataValues;
   }
