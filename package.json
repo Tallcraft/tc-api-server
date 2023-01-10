@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "dependencies": {
     "apollo-server": "^2.25.3",
-    "convict": "^6.2.3",
+    "convict": "^6.2.4",
     "convict-format-with-validator": "^6.2.0",
     "graphql": "^15.3.0",
     "graphql-validation-complexity": "^0.3.0",
