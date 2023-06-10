@@ -36,7 +36,7 @@
           },
           "address": "localhost:25565",
           "version": "1.16.3",
-          "pollingInterval": 60
+          "pollInterval": 60
         }
       ]
     }
