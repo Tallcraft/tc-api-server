@@ -7,7 +7,7 @@ const { Op } = Sequelize;
 
 class Player {
   static async getPlayerList({
-    limit, offset, order, searchPlayerName,
+    limit, offset, order, matchAll, searchPlayerName,
   }) {
     const options = {
       offset,
@@ -16,12 +16,25 @@ class Player {
     };
 
     if (searchPlayerName) {
-      options.where = {
-        lastSeenName: Sequelize.where(
-          Sequelize.fn('LOWER',
-            Sequelize.col('BAT_player')), 'LIKE', searchPlayerName,
-        ),
-      };
+
+        var nameMatchElements = searchPlayerName.map(nameElement => {
+            return {
+                lastSeenName: { 
+                    [Op.like] : nameElement,
+                }
+            }
+        })
+        
+        // And forces all to match, Or allows any to match
+        if(matchAll) {
+            options.where = {
+                [Op.and] : nameMatchElements
+              };
+        } else {
+            options.where = {
+                [Op.or] : nameMatchElements
+            };
+        }
     }
     const playerQuery = bungeeAdminToolsConnector.models.player.findAll(options)
       // Fix invalid UUIDS without dashes

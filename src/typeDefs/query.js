@@ -21,8 +21,10 @@ const query = gql`
             offset: Int = 0,
             "Whether to sort ascending or descending by player first join date."
             order: ListOrder = DESC,
-            "Filter results by last seen player name. Supports SQL LIKE patterns."
-            searchPlayerName: String
+            "If true, searchPlayerName must have all elements match a username, if false any can match."
+            matchAll: Boolean = true,
+            "Filter results by last seen player name. Supports SQL LIKE patterns. Matching parameters defined by matchAll"
+            searchPlayerName: [String]
         ): PlayerSearchResult!
         player(
             "The unique identifier of the player as defined by Minecraft. Must be a valid UUIDv4 with dashes."

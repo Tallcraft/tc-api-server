@@ -11,7 +11,7 @@
     "graphql-subscriptions": "^2.0.0",
     "graphql-validation-complexity": "^0.3.0",
     "minecraft-protocol": "^1.16.0",
-    "mysql2": "^2.1.0",
+    "mysql2": "^3.10.2",
     "sequelize": "^6.29.0"
   },
   "devDependencies": {

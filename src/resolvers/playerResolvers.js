@@ -5,14 +5,14 @@ const MAX_PLAYER_QUERY_COUNT = 100;
 const playerResolvers = {
   Query: {
     players: ((_, {
-      limit, offset, order, searchPlayerName,
+      limit, offset, order, matchAll, searchPlayerName,
     }) => {
       let queryLimit = limit;
       if (queryLimit > MAX_PLAYER_QUERY_COUNT) {
         queryLimit = MAX_PLAYER_QUERY_COUNT;
       }
       return Player.getPlayerList({
-        limit: queryLimit, offset, order, searchPlayerName,
+        limit: queryLimit, offset, order, matchAll, searchPlayerName,
       });
     }),
     player: (_, { uuid }) => Player.getByUUID(uuid),
