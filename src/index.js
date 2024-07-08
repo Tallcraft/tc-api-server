@@ -18,6 +18,8 @@ const config = require('./config');
     validationRules: maxQueryCost > 0 ? [createComplexityLimitRule(maxQueryCost)] : [],
     introspection: true,
     playground: true,
+    cache: 'bounded',
+    persistedQueries: false,
   });
 
   const { url } = await server.listen(config.get('apollo'));
